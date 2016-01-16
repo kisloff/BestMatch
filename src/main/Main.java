@@ -2,19 +2,22 @@ package main;
 
 import java.util.*;
 
-/**
- * Created by Кирилл on 04.01.2016.
- */
 public class Main {
+    private static String WAY_OF_OPT = "Way of optimization";
+    private static String LOADS = "Loads";
+    private static String LOADS_NORMALIZED = "Loads after normalization";
+    private static String CRITERIAL_WEIGHTS = "Weights of criteria";
+    private static String UTILITY_FUNCTION = "Function of utility meanings";
+
     public static void main(String[] args) {
 
-        Util.printArrayWithHeader(Math.wayOfOptimization, "wayOfOptimization");
+        Util.printArrayWithHeader(Math.wayOfOptimization, WAY_OF_OPT);
 
         Math.checkSourceMatrixForZeros(Math.sourceMatrix);
 
-        Util.printMatrixWithHeader(Math.sourceMatrix, "Loads");
+        Util.printMatrixWithHeader(Math.sourceMatrix, LOADS);
 
-    //create and initialise array of temporary arrays
+        //create and initialise array of temporary arrays
 
         double[][] tempArrArr = new double[Math.ARR_SIZE][];
 
@@ -22,7 +25,7 @@ public class Main {
             tempArrArr[i] = new double[Math.sourceMatrix.length];
         }
 
-    //normalize matrix using temp array of arrays
+        //normalize matrix using temp array of arrays
 
         Math.normalizeFull(tempArrArr);
 
@@ -30,9 +33,9 @@ public class Main {
             for(int i = 0; i < Math.sourceMatrix.length; i++)
                 Math.normalizedMatrix[i][n] = tempArrArr[n][i];
 
-        Util.printMatrixWithHeader(Math.normalizedMatrix,"Loads after normalization");
+        Util.printMatrixWithHeader(Math.normalizedMatrix, LOADS_NORMALIZED);
 
-        Util.printArrayWithHeader(Math.criterialWeights, "Weights of criteria");
+        Util.printArrayWithHeader(Math.criterialWeights, CRITERIAL_WEIGHTS);
 
         //function of utility
 
@@ -42,9 +45,10 @@ public class Main {
             for(int j = 0; j < Math.ARR_SIZE; j++)
                 utilMeanings[i] += Math.normalizedMatrix[i][j] * Math.criterialWeights[j];
 
-        Util.printArrayWithHeader(utilMeanings, "Function of utility meanings");
+        Util.printArrayWithHeader(utilMeanings, UTILITY_FUNCTION);
 
         //sorting
+
         TreeMap<Double, String> tmap = new TreeMap(Collections.reverseOrder());
 
         String[] sourceStrings = new String[Math.sourceMatrix.length];

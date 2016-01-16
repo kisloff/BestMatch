@@ -1,8 +1,5 @@
 package main;
 
-/**
- * Created by Кирилл on 09.01.2016.
- */
 public class Math {
 
     public static final int ARR_SIZE = 5;
