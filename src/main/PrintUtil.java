@@ -3,14 +3,20 @@ package main;
 import java.util.Iterator;
 import java.util.Map;
 
-public class Util {
+public class PrintUtil {
+
+    public static String WAY_OF_OPT = "Way of optimization";
+    public static String LOADS = "Loads";
+    public static String LOADS_NORMALIZED = "Loads after normalization";
+    public static String CRITERIAL_WEIGHTS = "Weights of criteria";
+    public static String UTILITY_FUNCTION = "Function of utility meanings";
 
     public static void printMatrixWithHeader(double[][] matrix, String header){
         System.out.print(header);
         for(double[] d : matrix) {
             System.out.println();
             for (double n : d) {
-                System.out.format("%.3f ", n);
+                System.out.format("%.1f ", n);
             }
         }
         System.out.println();
