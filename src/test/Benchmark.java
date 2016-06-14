@@ -1,41 +1,42 @@
-package main;
+package test;
+
+import ahp.AHPM;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class LaptopMain {
+/**
+ * Created by Кирилл on 23.03.2016.
+ */
+public class Benchmark {
     public static void main(String[] args) {
+
+
 
         final int ARR_SIZE = 5;
 
-        int[] wayOfOptimization = new int[]{0, 1, 1, 1, 1};
+        int[] wayOfOptimization = new int[]{1, 1, 0, 0, 1};
+        // public static int[] wayOfOptimization = new int[]{0, 0, 0, 1, 1}; //order changes
 
-        double[][] sourceMatrix =
-                {       {37990, 1.7, 2, 6144, 2048},
-                        {22990, 1.35, 2, 4096, 2048},
-                        {55850, 2.5, 4, 8192, 2048},
-                        {9990, 1.33, 4, 2048, 2048},
-                        {299750, 2.7, 4, 32768, 8192}
-                };
+        double[][] sourceMatrix = CaseGenerator.generateCase(3000, ARR_SIZE);
 
+        long before = System.currentTimeMillis();
 
         double[][] normalizedMatrix = new double[sourceMatrix.length][ARR_SIZE];
 
-        //привязать размер к размеру исходной матрицы. То же для предыдущего
-        final double[] criterialWeights = new double[]{0.5, 0.25, 0.1, 0.2, 0.15};
+        final double[] criterialWeights = new double[]{0.40, 0.15, 0.15, 0.15, 0.15};
 
-        System.out.println(new LaptopMain().getClass().getSimpleName().toString());
+        System.out.println(new TruckerMain().getClass().getSimpleName().toString());
 
-        PrintUtil.printArrayWithHeader(wayOfOptimization, PrintUtil.WAY_OF_OPT);
+        //PrintUtil.printArrayWithHeader(wayOfOptimization, PrintUtil.WAY_OF_OPT);
 
-        Math.checkSourceMatrixForZeros(sourceMatrix, ARR_SIZE);
+        AHPM.checkSourceMatrixForZeros(sourceMatrix, ARR_SIZE);
 
-        PrintUtil.printMatrixWithHeader(sourceMatrix, PrintUtil.LOADS);
+        //PrintUtil.printMatrixWithHeader(sourceMatrix, PrintUtil.ALTERNATIVES);
 
         //create and initialise array of temporary arrays
-
         double[][] tempArrArr = new double[ARR_SIZE][];
 
         for(int i = 0; i < ARR_SIZE; i++){
@@ -43,26 +44,24 @@ public class LaptopMain {
         }
 
         //normalize matrix using temp array of arrays
-
-        Math.normalizeFull(tempArrArr, sourceMatrix, wayOfOptimization);
+        AHPM.normalizeFull(tempArrArr, sourceMatrix, wayOfOptimization);
 
         for(int n = 0; n < ARR_SIZE; n++)
             for(int i = 0; i < sourceMatrix.length; i++)
                 normalizedMatrix[i][n] = tempArrArr[n][i];
 
-        PrintUtil.printMatrixWithHeader(normalizedMatrix, PrintUtil.LOADS_NORMALIZED);
+        //PrintUtil.printMatrixWithHeader(normalizedMatrix, PrintUtil.NORMALIZED);
 
-        PrintUtil.printArrayWithHeader(criterialWeights, PrintUtil.CRITERIAL_WEIGHTS);
+        //PrintUtil.printArrayWithHeader(criterialWeights, PrintUtil.CRITERIAL_WEIGHTS);
 
         //function of utility
-
         double[] utilMeanings = new double[sourceMatrix.length];
 
         for(int i = 0; i < normalizedMatrix.length; i++)
             for(int j = 0; j < ARR_SIZE; j++)
                 utilMeanings[i] += normalizedMatrix[i][j] * criterialWeights[j];
 
-        PrintUtil.printArrayWithHeader(utilMeanings, PrintUtil.UTILITY_FUNCTION);
+        //PrintUtil.printArrayWithHeader(utilMeanings, PrintUtil.UTILITY_FUNCTION);
 
         //sorting
 
@@ -75,7 +74,7 @@ public class LaptopMain {
 
         for(int i = 0; i < sourceMatrix.length; i++){
             for(int j = 0; j < ARR_SIZE; j++)
-                sourceStrings[i] += sourceMatrix[i][j] + "\t";
+                sourceStrings[i] += sourceMatrix[i][j] + " ";
         }
 
         for(int i=0; i<sourceStrings.length; i++)
@@ -84,7 +83,9 @@ public class LaptopMain {
         Set set = tmap.entrySet();
         Iterator iterator = set.iterator();
 
-        PrintUtil.printTree(iterator);
+        //PrintUtil.printTree(iterator);
+        long after = System.currentTimeMillis();
+        long diff = after - before;
+        System.out.println("diff = " + diff);
     }
-
 }

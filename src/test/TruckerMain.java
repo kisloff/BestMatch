@@ -1,4 +1,7 @@
-package main;
+package test;
+
+import ahp.AHPM;
+import utils.PrintUtil;
 
 import java.util.*;
 
@@ -16,22 +19,19 @@ public class TruckerMain {
                         {1.4, 92, 8, 33, 34},
                         {1.8, 81, 10, 112, 21}};
 
-
         double[][] normalizedMatrix = new double[sourceMatrix.length][ARR_SIZE];
 
-        //привязать размер к размеру исходной матрицы. То же для предыдущего
         final double[] criterialWeights = new double[]{0.40, 0.15, 0.15, 0.15, 0.15};
 
         System.out.println(new TruckerMain().getClass().getSimpleName().toString());
 
         PrintUtil.printArrayWithHeader(wayOfOptimization, PrintUtil.WAY_OF_OPT);
 
-        Math.checkSourceMatrixForZeros(sourceMatrix, ARR_SIZE);
+        AHPM.checkSourceMatrixForZeros(sourceMatrix, ARR_SIZE);
 
-        PrintUtil.printMatrixWithHeader(sourceMatrix, PrintUtil.LOADS);
+        PrintUtil.printMatrixWithHeader(sourceMatrix, PrintUtil.ALTERNATIVES);
 
         //create and initialise array of temporary arrays
-
         double[][] tempArrArr = new double[ARR_SIZE][];
 
         for(int i = 0; i < ARR_SIZE; i++){
@@ -39,19 +39,17 @@ public class TruckerMain {
         }
 
         //normalize matrix using temp array of arrays
-
-        Math.normalizeFull(tempArrArr, sourceMatrix, wayOfOptimization);
+        AHPM.normalizeFull(tempArrArr, sourceMatrix, wayOfOptimization);
 
         for(int n = 0; n < ARR_SIZE; n++)
             for(int i = 0; i < sourceMatrix.length; i++)
                 normalizedMatrix[i][n] = tempArrArr[n][i];
 
-        PrintUtil.printMatrixWithHeader(normalizedMatrix, PrintUtil.LOADS_NORMALIZED);
+        PrintUtil.printMatrixWithHeader(normalizedMatrix, PrintUtil.NORMALIZED);
 
         PrintUtil.printArrayWithHeader(criterialWeights, PrintUtil.CRITERIAL_WEIGHTS);
 
         //function of utility
-
         double[] utilMeanings = new double[sourceMatrix.length];
 
         for(int i = 0; i < normalizedMatrix.length; i++)
@@ -80,6 +78,6 @@ public class TruckerMain {
         Set set = tmap.entrySet();
         Iterator iterator = set.iterator();
 
-        PrintUtil.printTree(iterator);
+        //PrintUtil.printTree(iterator);
     }
 }
