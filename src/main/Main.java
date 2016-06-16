@@ -137,7 +137,7 @@ public class Main {
 
 
             AHPM.executeAHPFull(BestClusterMatrix, BestClusterNormalizedMatrix, criterialWeights); //goal
-            AHPM.executeAHPFull(sourceMatrix, normalizedMatrix, criterialWeights); //initial - for all alternatives}
+           // AHPM.executeAHPFull(sourceMatrix, normalizedMatrix, criterialWeights); //initial - for all alternatives}
         }
 
         else {
